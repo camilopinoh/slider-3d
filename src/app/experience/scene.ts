@@ -14,8 +14,9 @@ import {
 } from "angular-three-soba/staging";
 import * as THREE from "three";
 import { Mesh } from "three";
-import { scenes } from "../state";
+import { activeSlide, scenes } from "../state";
 import { RenderTextureScene } from "./render-texture-scene";
+import { CameraHandler } from "./camera-handler";
 
 extend(THREE);
 
@@ -28,6 +29,9 @@ extend(THREE);
         <ngt-ambient-light [intensity]="0.2 * Math.PI" />
         <!-- Entorno de la escena-->
         <ngts-environment [options]="{ preset: 'city'}" />
+        
+        <!-- Control de la camara para ir a las otras slides-->
+        <app-camera-handler [slideDistance]="slideDistance"/>
 
         <ngt-group>
             <!-- Posiciona la camara en la parte superior del viewport, depende del fov, siempre comienza fuera de camara -->
@@ -98,18 +102,20 @@ extend(THREE);
             <ngt-mesh-standard-material />
         </ngt-mesh> -->
         <!-- Orbit controls (control de camara) de la escena-->
-        <ngts-orbit-controls />
+        <!-- <ngts-orbit-controls /> -->
     `,
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
-        NgtsOrbitControls, 
-        NgtArgs, 
-        NgtsEnvironment, 
-        NgtsGrid, 
-        NgtsRenderTexture,
-        NgtsRenderTextureContent, 
-        RenderTextureScene]
+    NgtsOrbitControls,
+    NgtArgs,
+    NgtsEnvironment,
+    NgtsGrid,
+    NgtsRenderTexture,
+    NgtsRenderTextureContent,
+    RenderTextureScene,
+    CameraHandler
+]
 })
 
 export class SceneGraph {
